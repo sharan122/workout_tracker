@@ -1,4 +1,5 @@
 Workout Tracker with Django, React, and JWT Authentication
+
 Overview 🌟
 This project is a modern Workout Tracker built with Django, React, and JWT (JSON Web Token). 
 It allows users to track their workouts, monitor calories burned, and visualize progress through an intuitive dashboard. 
