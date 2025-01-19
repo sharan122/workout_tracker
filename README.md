@@ -31,7 +31,6 @@
 - Dynamic charts displaying workout trends, calories burned, and fitness metrics
 
 ## Technologies Used ⚙️
-
 - **Frontend:** React.js
 - **Backend:** Django Rest Framework (DRF)
 - **Authentication:** JWT (JSON Web Tokens)
@@ -40,8 +39,27 @@
 
 ## Installation Guide 🔧
 
-### Backend Setup
+### Environment Configuration
+1. Create a `.env` file in the backend directory with the following configuration:
+```
+# Django Secret Key
+DJANGO_SECRET_KEY= you project secret key
 
+# Debug Setting
+DJANGO_DEBUG=True
+
+# Allowed Hosts
+DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
+
+# CORS Configuration
+CORS_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+
+# JWT Settings (in hours for access token, days for refresh token)
+JWT_ACCESS_TOKEN_LIFETIME=24
+JWT_REFRESH_TOKEN_LIFETIME=1
+```
+
+### Backend Setup
 1. Clone the repository:
 ```bash
 git clone https://github.com/sharan122/workout_tracker.git
@@ -75,7 +93,6 @@ python manage.py runserver
 ```
 
 ### Frontend Setup
-
 1. Navigate to the frontend directory:
 ```bash
 cd frontend
