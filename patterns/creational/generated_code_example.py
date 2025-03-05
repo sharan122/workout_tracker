@@ -1,21 +1,20 @@
-```python
-class Singleton:
-    _instance = None
+python
+class SingletonMeta(type):
+    _instances = {}
 
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super(Singleton, cls).__new__(cls)
-        return cls._instance
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            instance = super().__call__(*args, **kwargs)
+            cls._instances[cls] = instance
+        return cls._instances[cls]
 
-class Logger(Singleton):
-    def log(self, message):
-        print(f"Log: {message}")
 
-logger1 = Logger()
-logger2 = Logger()
+class Singleton(metaclass=SingletonMeta):
+    def __init__(self):
+        self.value = None
 
-logger1.log("This is the first log message.")
-logger2.log("This is the second log message.")
+    def set_value(self, value):
+        self.value = value
 
-print(logger1 is logger2)
-```
+    def get_value(self):
+        return self.value
