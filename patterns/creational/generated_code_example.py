@@ -1,20 +1,21 @@
 python
-class SingletonMeta(type):
-    _instances = {}
+class Singleton:
+    _instance = None
 
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            instance = super().__call__(*args, **kwargs)
-            cls._instances[cls] = instance
-        return cls._instances[cls]
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(Singleton, cls).__new__(cls)
+        return cls._instance
 
+    def __init__(self, value=None):
+        if not hasattr(self, 'initialized'):
+            self.value = value
+            self.initialized = True
 
-class Singleton(metaclass=SingletonMeta):
-    def __init__(self):
-        self.value = None
+# Usage example
+singleton1 = Singleton(10)
+singleton2 = Singleton(20)
 
-    def set_value(self, value):
-        self.value = value
-
-    def get_value(self):
-        return self.value
+print(singleton1.value)  # Output: 10
+print(singleton2.value)  # Output: 10
+print(singleton1 is singleton2)  # Output: True
