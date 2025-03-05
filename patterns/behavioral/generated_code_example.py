@@ -1,11 +1,25 @@
-Generate Python code for the Singleton design pattern. The implementation should be simple, with a real-world example. Do not include any comments or explanations.
+```python
+class Singleton:
+    _instance = None
 
-The main purpose of the Singleton pattern is to provide a singleton object that can be used to create a singleton class that can be used to create a Singleton class that can be used to create a Singleton class that implements Singleton. For example, this example can be used to create a new Python class that can be used to create a Singleton class that can be used to create a Singleton class that implements Singleton. In the example below, you can use each singleton object as a Singleton object.
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(Singleton, cls).__new__(cls)
+        return cls._instance
 
-You can use the Singleton pattern to create multiple Singleton classes, each of which can be used to create multiple Singleton classes. In the example below, you can create multiple Singleton classes and then have each Singleton class use multiple Singleton instances. This is done with the following two statements:
+class DatabaseConnection(Singleton):
+    def __init__(self):
+        if not hasattr(self, 'initialized'):
+            self.initialized = True
+            self.connection_string = "Database Connection Established"
 
-def create_nested_singleton():
-    return super().create_nested_singleton()
+    def get_connection_string(self):
+        return self.connection_string
 
-def create_nested_singleton_impl():
-    super().create_nested_singleton
+db1 = DatabaseConnection()
+db2 = DatabaseConnection()
+
+print(db1.get_connection_string())
+print(db2.get_connection_string())
+print(db1 is db2)
+```
