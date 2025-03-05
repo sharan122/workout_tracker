@@ -1,39 +1,54 @@
 python
-class Observer:
-    def update(self, message):
+class Command:
+    def execute(self):
         pass
 
 
-class Subject:
+class Light:
+    def on(self):
+        print("Light is ON")
+
+    def off(self):
+        print("Light is OFF")
+
+
+class LightOnCommand(Command):
+    def __init__(self, light):
+        self.light = light
+
+    def execute(self):
+        self.light.on()
+
+
+class LightOffCommand(Command):
+    def __init__(self, light):
+        self.light = light
+
+    def execute(self):
+        self.light.off()
+
+
+class RemoteControl:
     def __init__(self):
-        self._observers = []
+        self.command = None
 
-    def attach(self, observer: Observer):
-        self._observers.append(observer)
+    def set_command(self, command):
+        self.command = command
 
-    def detach(self, observer: Observer):
-        self._observers.remove(observer)
-
-    def notify(self, message):
-        for observer in self._observers:
-            observer.update(message)
+    def press_button(self):
+        if self.command:
+            self.command.execute()
 
 
-class ConcreteObserver(Observer):
-    def __init__(self, name):
-        self.name = name
-
-    def update(self, message):
-        print(f"{self.name} received message: {message}")
-
-
-# Usage example
 if __name__ == "__main__":
-    subject = Subject()
-    observer1 = ConcreteObserver("Observer 1")
-    observer2 = ConcreteObserver("Observer 2")
+    light = Light()
+    light_on = LightOnCommand(light)
+    light_off = LightOffCommand(light)
 
-    subject.attach(observer1)
-    subject.attach(observer2)
+    remote = RemoteControl()
 
-    subject.notify("Hello Observers!")
+    remote.set_command(light_on)
+    remote.press_button()
+
+    remote.set_command(light_off)
+    remote.press_button()
