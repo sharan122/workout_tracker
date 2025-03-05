@@ -1,25 +1,14 @@
 ```python
-class Singleton:
-    _instance = None
-
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super(Singleton, cls).__new__(cls)
-        return cls._instance
-
-class DatabaseConnection(Singleton):
+class WorkoutBehavior:
     def __init__(self):
-        if not hasattr(self, 'initialized'):
-            self.initialized = True
-            self.connection_string = "Database Connection Established"
+        self.workout_history = []
 
-    def get_connection_string(self):
-        return self.connection_string
+    def log_workout(self, workout_type, duration):
+        self.workout_history.append({"type": workout_type, "duration": duration})
 
-db1 = DatabaseConnection()
-db2 = DatabaseConnection()
-
-print(db1.get_connection_string())
-print(db2.get_connection_string())
-print(db1 is db2)
+    def get_most_frequent_workout(self):
+        frequency = {}
+        for workout in self.workout_history:
+            frequency[workout['type']] = frequency.get(workout['type'], 0) + 1
+        return max(frequency, key=frequency.get) if frequency else None
 ```
