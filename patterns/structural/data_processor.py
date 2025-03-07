@@ -1,42 +1,30 @@
-class Shape:
-    def draw(self):
-        raise NotImplementedError("You should implement this method!")
+# patterns/structural/facade.py
 
-class Circle(Shape):
-    def draw(self):
-        return "Drawing a Circle"
+class ComplexSystem:
+    def operation_1(self):
+        return "Operation 1 completed."
 
-class Rectangle(Shape):
-    def draw(self):
-        return "Drawing a Rectangle"
+    def operation_2(self):
+        return "Operation 2 completed."
 
-class ShapeDecorator(Shape):
-    def __init__(self, shape):
-        self._shape = shape
+    def operation_3(self):
+        return "Operation 3 completed."
 
-class ColorFillDecorator(ShapeDecorator):
-    def __init__(self, shape, color):
-        super().__init__(shape)
-        self._color = color
 
-    def draw(self):
-        return f"{self._shape.draw()} with {self._color} color"
+class Facade:
+    def __init__(self):
+        self.system = ComplexSystem()
 
-class BorderDecorator(ShapeDecorator):
-    def __init__(self, shape, border_style):
-        super().__init__(shape)
-        self._border_style = border_style
+    def perform_operations(self):
+        results = []
+        results.append(self.system.operation_1())
+        results.append(self.system.operation_2())
+        results.append(self.system.operation_3())
+        return results
 
-    def draw(self):
-        return f"{self._shape.draw()} with {self._border_style} border"
 
-circle = Circle()
-rectangle = Rectangle()
-
-red_circle = ColorFillDecorator(circle, "red")
-dotted_rectangle = BorderDecorator(rectangle, "dotted")
-
-shapes = [red_circle, dotted_rectangle]
-
-for shape in shapes:
-    print(shape.draw())
+if __name__ == "__main__":
+    facade = Facade()
+    output = facade.perform_operations()
+    for result in output:
+        print(result)
