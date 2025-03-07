@@ -2,13 +2,13 @@
 
 class Subject:
     def __init__(self):
-        self._observers = []
+        self._observers = set()
 
     def attach(self, observer):
-        self._observers.append(observer)
+        self._observers.add(observer)
 
     def detach(self, observer):
-        self._observers.remove(observer)
+        self._observers.discard(observer)
 
     def notify(self, message):
         for observer in self._observers:
@@ -17,30 +17,28 @@ class Subject:
 
 class Observer:
     def update(self, message):
-        raise NotImplementedError("You should implement this method!")
+        pass
 
 
-class ConcreteObserverA(Observer):
+class ConcreteObserver(Observer):
+    def __init__(self, name):
+        self.name = name
+
     def update(self, message):
-        print(f"ConcreteObserverA received message: {message}")
-
-
-class ConcreteObserverB(Observer):
-    def update(self, message):
-        print(f"ConcreteObserverB received message: {message}")
+        print(f"{self.name} received message: {message}")
 
 
 if __name__ == "__main__":
     subject = Subject()
 
-    observer_a = ConcreteObserverA()
-    observer_b = ConcreteObserverB()
+    observer1 = ConcreteObserver("Observer 1")
+    observer2 = ConcreteObserver("Observer 2")
 
-    subject.attach(observer_a)
-    subject.attach(observer_b)
+    subject.attach(observer1)
+    subject.attach(observer2)
 
     subject.notify("Hello Observers!")
-    
-    subject.detach(observer_a)
 
-    subject.notify("Another message for remaining observers.")
+    subject.detach(observer1)
+
+    subject.notify("Observer 1 has been detached.")
